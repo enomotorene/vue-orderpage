@@ -32,29 +32,35 @@
       </table>
     </div>
 
+    <!-- shopping basket -->
     <div class="col-sm-12 col-md-6">
-      <table class="table">
-        <thead class="thead-default">
-          <tr>
-            <th>Quantity</th>
-            <th>Item</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <button class="btn btn-secondary" type="button">-</button>
-              <span>1-</span>
-              <button class="btn btn-secondary" type="button">+</button>
-            </td>
-            <td>Margherita 9"</td>
-            <td>9.95</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>Order total:</p>
-      <button class="btn btn-success btn-block">Place Order</button>
+      <div v-if="basket.length > 0">
+        <table class="table">
+          <thead class="thead-default">
+            <tr>
+              <th>Quantity</th>
+              <th>Item</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody v-for="item in basket" :key="item">
+            <tr>
+              <td>
+                <button class="btn btn-secondary" type="button">-</button>
+                <span> {{ item.quantity }} - </span>
+                <button class="btn btn-secondary" type="button">+</button>
+              </td>
+              <td>{{ item.name }} {{ item.size }}"</td>
+              <td>{{ item.price * item.quantity }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Order total:</p>
+        <button class="btn btn-success btn-block">Place Order</button>
+      </div>
+      <div v-else>
+        <p>{{ basketText }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -64,6 +70,7 @@
     data() {
       return {
         basket: [],
+        basketText: "Your basket is empty!",
         getMenyItems: {
           1: {
             name: "Margherita",
