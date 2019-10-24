@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <!-- {{ $route.params.items }} pathのmenuの後ろを変えるとメニュー名が変わる -->
     <div class="col-sm-12 col-md-6">
       <table class="table table-hover">
         <thead class="thead-default">
@@ -46,9 +47,21 @@
           <tbody v-for="item in basket" :key="item">
             <tr>
               <td>
-                <button class="btn btn-secondary" type="button">-</button>
+                <button
+                  class="btn btn-secondary"
+                  @click="decreaseQuantity(item)"
+                  type="button"
+                >
+                  -
+                </button>
                 <span> {{ item.quantity }} - </span>
-                <button class="btn btn-secondary" type="button">+</button>
+                <button
+                  class="btn btn-secondary"
+                  @click="increaseQuantity(item)"
+                  type="button"
+                >
+                  +
+                </button>
               </td>
               <td>{{ item.name }} {{ item.size }}"</td>
               <td>{{ item.price * item.quantity }}</td>
@@ -121,6 +134,7 @@
       };
     },
     methods: {
+      //function here
       addToBasket(item, option) {
         this.basket.push({
           name: item.name,
@@ -128,6 +142,19 @@
           size: option.size,
           quantity: 1
         });
+      },
+      removeFromBasket(item) {
+        this.basket.splice(this.basket.indexOf(item), 1);
+      },
+      increaseQuantity(item) {
+        item.quantity++;
+      },
+      decreaseQuantity(item) {
+        item.quantity--;
+
+        if (item.quantity === 0) {
+          this.removeFromBasket(item);
+        }
       }
     }
   };

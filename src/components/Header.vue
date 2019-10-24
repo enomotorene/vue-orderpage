@@ -3,16 +3,20 @@
     <nav class="navbar navbar-toggleable-md navbar-light">
       <a href="/" class="navbar-brand">My vue site</a>
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="">HOME</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="">MENU</a>
-        </li>
+        <router-link :to="{ name: 'homeLink' }" tag="li"
+          ><a class="nav-link">HOME</a></router-link
+        >
+        <router-link :to="{ name: 'menuLink' }" tag="li"
+          ><a class="nav-link">Menu</a></router-link
+        >
       </ul>
     </nav>
   </header>
 </template>
+
+<script>
+  export default {};
+</script>
 
 <style>
   header {
