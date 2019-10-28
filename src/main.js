@@ -16,7 +16,15 @@ const routes = [
   { path: "/", name: "homeLink", component: Home },
   // { path: "/menu/:items", component: Menu }
   { path: "/menu", name: "menuLink", component: Menu },
-  { path: "/admin", name: "adminLink", component: Admin },
+  {
+    path: "/admin",
+    name: "adminLink",
+    component: Admin,
+    beforeEnter: (to, from, next) => {
+      alert("This area is for authorised user only, please login to continue.");
+      next();
+    }
+  },
   {
     path: "/about",
     name: "aboutLink",
@@ -41,6 +49,20 @@ const router = new VueRouter({
   routes,
   mode: "history" //takes advantage of html file , history api. which allows to change url wihtouh refresh. remove # tag
 });
+
+// router.afterEach((to, from) => {
+//   //global navigation guards
+//   alert("after each");
+//   // next(); //tells to next router (page)
+//   // next(false); //does not work
+
+//   // if (to.path === "/menu") {
+//   //   //decleared to link to menu page
+//   //   next();
+//   // } else {
+//   //   next(false);
+//   // }
+// });
 
 Vue.config.productionTip = false;
 

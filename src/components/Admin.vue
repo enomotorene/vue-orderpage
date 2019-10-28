@@ -70,6 +70,24 @@
     components: {
       ppNewPizza: NewPizza,
       ppLogin: Login
+    },
+    beforeRouteLeave: (to, from, next) => {
+      if (confirm("Have you remembered to log out") == true) {
+        next();
+      } else {
+        next(false);
+      }
     }
+    // data() {
+    //   return {
+    //     name: "Chris"
+    //   };
+    // },
+    // beforeRouteEnter: (to, from, next) => {
+    //   //alert("Hi " + this.name);
+    //   next(vm => {
+    //     alert("Hi " + vm.name);
+    //   }); //folowing v model
+    // }
   };
 </script>
