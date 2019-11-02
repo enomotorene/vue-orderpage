@@ -1,5 +1,9 @@
 <template>
   <div class="row">
+    <div>
+    <div>
+      <p>Logged in as: <br> {{ currentUser }}</p>
+    </div>
     <form>
       <div class="form-group">
         <label>Email address</label>
@@ -26,11 +30,21 @@
         Sign out
       </button>
     </form>
+     </div>
   </div>
 </template>
 
 <script>
   import Firebase from "firebase";
+  import { store } from '../store/store.js'
+
+  Firebase.auth().onAuthStateChanged(function(user) { //function has passed user info
+    if(user) {
+      store.dispatch('setUser', user) //from store.js
+    } else {  
+      store.dispatch('setUser', null) //from store.js pass null value
+    }
+  });
 
   export default {
     methods: {
@@ -60,6 +74,11 @@
           .catch(function(error) {
             alert("error.");
           });
+      }
+    },
+    computed: {
+      currentUser() {
+        return this.$store.getters.currentUser
       }
     }
   };

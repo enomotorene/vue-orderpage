@@ -10,7 +10,7 @@
             <th>Add to basket</th>
           </tr>
         </thead>
-        <tbody v-for="(item, key, index) in getMenyItems" :key="key">
+        <tbody v-for="(item, key, index) in getMenuItems" :key="key">
           <tr>
             <td>
               <strong>{{ item.name }}</strong>
@@ -69,69 +69,29 @@
           </tbody>
         </table>
         <p>Order total:</p>
-        <button class="btn btn-success btn-block">Place Order</button>
+        <button class="btn btn-success btn-block" @click="addNewOrder">Place Order</button>
       </div>
       <div v-else>
-        <p>{{ basketText }}</p>
+        <p>{{ basketText }}</p> {{ this.$store.state.orders }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
   export default {
     data() {
       return {
         basket: [],
-        basketText: "Your basket is empty!",
-        getMenyItems: {
-          1: {
-            name: "Margherita",
-            description:
-              "A delicious tomato based pizza topped with mozzarella",
-            options: [
-              {
-                size: 9,
-                price: 6.95
-              },
-              {
-                size: 12,
-                price: 10.95
-              }
-            ]
-          },
-          2: {
-            name: "Peparoni",
-            description:
-              "A delicious tomato based pizza topped with mozzarella",
-            options: [
-              {
-                size: 9,
-                price: 6.95
-              },
-              {
-                size: 12,
-                price: 10.95
-              }
-            ]
-          },
-          3: {
-            name: "4 formaggi",
-            description:
-              "A delicious tomato based pizza topped with mozzarella",
-            options: [
-              {
-                size: 9,
-                price: 6.95
-              },
-              {
-                size: 12,
-                price: 10.95
-              }
-            ]
-          }
-        }
+        basketText: "Your basket is empty!"
       };
+    },
+    computed: {
+      ...mapGetters([
+        'getMenuItems'
+      ])
     },
     methods: {
       //function here
@@ -155,6 +115,11 @@
         if (item.quantity === 0) {
           this.removeFromBasket(item);
         }
+      },
+      addNewOrder() {
+        this.$store.commit('addOrder', this.basket)
+        this.basket = []
+        this.basketText = "Thank you, your order has been placed! :)"
       }
     }
   };
