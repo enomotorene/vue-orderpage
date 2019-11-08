@@ -26,14 +26,19 @@
 </template>
 
 <script>
-  import Header from "./components/Header.vue";
-  import Footer from "./components/Footer.vue";
+  import Header from "./components/Header.vue"
+  import Footer from "./components/Footer.vue"
+  import { dbMenuRef, dbOrdersRef } from './firebaseConfig'
 
   export default {
     // name: 'app',
     components: {
       ppHeader: Header,
       ppFooter: Footer
+    },
+    created () {
+      this.$store.dispatch('setMenuRef', dbMenuRef),
+      this.$store.dispatch('setOrdersRef', dbOrdersRef)
     }
   };
 </script>

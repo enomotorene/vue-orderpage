@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import menu from './modules/menu'
 import orders from './modules/orders'
 import users from './modules/users'
+import { vuexfireMutations } from 'vuexfire'
 
 
 // import * as actions from './actions'  //import all module
@@ -13,6 +14,7 @@ import users from './modules/users'
 Vue.use(Vuex) //vueがvuexを使う
 
 export const store = new Vuex.Store({
+    mutations: { ...vuexfireMutations },
     modules: {
         menu,
         orders,
