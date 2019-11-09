@@ -10,7 +10,7 @@
             <th>Add to basket</th>
           </tr>
         </thead>
-        <tbody v-for="(item, key, index) in getMenuItems" :key="key">
+        <tbody v-for="(item, key, index) in getMenuItems" :key="item['.key']">
           <tr>
             <td>
               <strong>{{ item.name }}</strong>
@@ -68,11 +68,11 @@
             </tr>
           </tbody>
         </table>
-        <p>Order total:</p>
+        <p>Order total: {{ total }}</p>
         <button class="btn btn-success btn-block" @click="addNewOrder">Place Order</button>
       </div>
       <div v-else>
-        <p>{{ basketText }}</p> {{ this.$store.state.orders }}
+        <p>{{ basketText }}</p> 
       </div>
     </div>
   </div>
@@ -92,7 +92,15 @@ import { dbOrdersRef } from '../firebaseConfig';
     computed: {
       ...mapGetters([
         'getMenuItems'
-      ])
+      ]),
+      total() {
+        var totalCost = 0;
+        for( var items in this.basket ) {
+          var individualItem = this.basket[items];
+          totalCost += individualItem.quantity * individualItem.price;
+        }
+        return totalCost
+      }
     },
     methods: {
       //function here
