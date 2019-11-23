@@ -40,6 +40,10 @@ Vue.filter('currency', function(val){
   return Accounting.formatMoney(val)
 })
 
+Vue.component('global-component', {
+  template: '<div>A global component </div>'
+})
+
 new Vue({
   router,
   store,
